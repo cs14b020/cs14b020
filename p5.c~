@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<stdbool.h>
+#define PI 3.14159265358979323846
+
+struct vertex {
+    int vertex_no;
+    float x_coordinate;
+    float y_coordinate;
+	bool config;// wether it is convex or concave at that point config is 1 when reflex and 0 when concave at that point
+};
+
+void max_x_coordinate(struct vertex* polygon,int n,int* i);
+
+int main() {
+
+    int n;
+    scanf("%d\n",&n);
+   
+    struct vertex polygon[n];
+   
+    int i;
+    for( i=0 ; i<n ; i++) {
+        scanf("%d %f %f",&polygon[i].vertex_no,&polygon[i].x_coordinate,&polygon[i].y_coordinate);
+    }
+		
+	i=0;
+	max_x_coordinate(polygon,n,&i);
+
+	float x1 = (i != 0) ? polygon[i-1].x_coordinate : polygon[n-1].x_coordinate ;
+	float y1 = (i != 0) ? polygon[i-1].y_coordinate : polygon[n-1].y_coordinate ;
+	float x2 = polygon[i].x_coordinate;
+	float y2 = polygon[i].y_coordinate;
+	float x3 = (i != n-1) ? polygon[i+1].x_coordinate : polygon[0].x_coordinate ;
+	float y3 = (i != n-1) ? polygon[i+1].y_coordinate : polygon[0].y_coordinate ;
+
+	int cmp = ((x2-x1)*(y3-y2)-(x3-x2)*(y2-y1)) ;
+	
+	int count = 0; // count for angles > 180 degrees
+	for(i=0 ; i<n ; i++) {
+		x1 = (i != 0) ? polygon[i-1].x_coordinate : polygon[n-1].x_coordinate ;
+		y1 = (i != 0) ? polygon[i-1].y_coordinate : polygon[n-1].y_coordinate ;
+		x2 = polygon[i].x_coordinate;
+		y2 = polygon[i].y_coordinate;
+		x3 = (i != n-1) ? polygon[i+1].x_coordinate : polygon[0].x_coordinate ;
+		y3 = (i != n-1) ? polygon[i+1].y_coordinate : polygon[0].y_coordinate ;
+		
+		if(((x2-x1)*(y3-y2)-(x3-x2)*(y2-y1))*cmp < 0){
+			polygon[i].config = 1;	
+			printf("%d\n",i+1); 
+			count++;
+		}
+	}
+
+	if(count == 0)
+		printf("0\n");
+
+	return 0;
+
+}
+
+
+void max_x_coordinate(struct vertex* polygon,int n,int* i) {
+	int j=0;
+	int max = polygon[0].x_coordinate;
+
+	for(j=0;j<n;j++) {
+		if(max < polygon[j].x_coordinate){
+			max = polygon[j].x_coordinate;
+			*i = j;	
+		}	
+	}
+
+	return;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

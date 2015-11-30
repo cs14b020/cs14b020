@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<string.h>
+
+int strstrN(char* s1 , char* s2) {
+	int l1 = strlen(s1);
+	int l2 = strlen(s2);
+
+	int count = 0;
+	int i;
+
+	for(i=0;i <= l1-l2 ; i++) {
+		if(!strncmp(s1+i,s2,l2))
+			count++;
+	}
+
+	return count;
+
+}
+
+int main(int argc , char **argv) {
+
+	char *s1,*s2;											// input taken as command line arguments
+	s1 = argv[1];
+	s2 = argv[2];
+
+	printf("%d\n",strstrN(s1,s2));
+ 
+	return 0;
+}

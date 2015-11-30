@@ -1,0 +1,12 @@
+1
+shashi
+cse
+20
+1
+vinod
+cse
+13
+1
+vinay
+cse
+6
